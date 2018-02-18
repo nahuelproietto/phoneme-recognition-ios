@@ -1,4 +1,4 @@
-## SpeechRecognition
+## Speech Recognition (Swift 3.0)
 This is an open source implementation of MFCC feature extraction and DTW analysis. <br />
 You will need to train the system before a test <br />
 There is a level threashold of XdB in order to window the phoneme audio clip <br />
