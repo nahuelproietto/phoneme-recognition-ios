@@ -50,7 +50,7 @@ class SpectralView: UIView {
         let maxDB: Float = 64.0
         let minDB: Float = -32.0
         let headroom = maxDB - minDB
-        let colWidth = tempi_round_device_scale(d: viewWidth / CGFloat(count))
+        let colWidth = roundScale(d: viewWidth / CGFloat(count))
         
         for i in 0..<count {
             let magnitude = fft.magnitudeAtBand(i)
@@ -80,6 +80,12 @@ class SpectralView: UIView {
         context.restoreGState()
     }
     
+    func roundScale(d: CGFloat) -> CGFloat {
+        let scale: CGFloat = UIScreen.main.scale
+        return round(d * scale) / scale
+    }
+
+
     private func drawLabels(context: CGContext) {
         let viewWidth = self.bounds.size.width
         let viewHeight = self.bounds.size.height

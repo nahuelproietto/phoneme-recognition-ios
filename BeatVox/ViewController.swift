@@ -14,22 +14,30 @@ struct Parameters {
     static let FFT_BANDS_PER_OCTAVE = 45
 }
 
+//MARK:
 class ViewController: UIViewController {
     
     var spectralView: SpectralView!
+    var analyser : Analyser?
     var audioInput: Audio!
     
-    @IBOutlet weak var phonemaTextField: UITextField?
-    
-    @IBAction func listenMode(sender: AnyObject) {
-        Analyser.sharedInstance.listeningMode = true
-    }
+    @IBOutlet weak var predictButton: UIButton?
+    @IBOutlet weak var textField: UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupAnalyser()
+        self.setupCallbacks()
+    }
+    
+    func setupAnalyser() {
+        self.analyser = Analyser()
+        self.analyser?.delegate = self
+    }
+    
+    func setupCallbacks() {
         
-        // Do any additional setup after loading the view, typically from a nib.
-        self.phonemaTextField?.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        self.textField?.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         self.spectralView = SpectralView(frame: self.view.bounds)
         self.spectralView.frame = CGRect(x: self.spectralView.frame.origin.x,
@@ -38,34 +46,67 @@ class ViewController: UIViewController {
                                          height: self.spectralView.frame.size.height - 90)
         
         self.spectralView.backgroundColor = UIColor.white
-        self.view.addSubview(self.spectralView)
+        self.view.insertSubview(self.spectralView, at: 0)
         
         let audioInputCallback: AudioInputCallback = { (timeStamp, numberOfFrames, samples) -> Void in
             let numberOfBands = UIScreen.main.bounds.size.width * UIScreen.main.scale
-            Analyser.sharedInstance.analyse(timeStamp: Double(timeStamp),
-                                            numberOfFrames: Int(numberOfFrames),
-                                            numberOfBands: Int(numberOfBands),
-                                            samples: samples)
+            self.analyser?.process(timeStamp: Double(timeStamp),
+                                   numberOfFrames: Int(numberOfFrames),
+                                   numberOfBands: Int(numberOfBands),
+                                   samples: samples)
             // UI rendering
-            tempi_dispatch_main { () -> () in
+            DispatchQueue.main.async {
                 self.refreshViews()
             }
         }
+        
         self.audioInput = Audio(audioInputCallback: audioInputCallback, sampleRate: 44100, numberOfChannels: 1)
         self.audioInput.startRecording()
+        
     }
     
     func refreshViews() {
-        self.spectralView.fft = Analyser.sharedInstance.fft
+        guard self.analyser != nil else { return }
+        self.spectralView.fft = analyser?.fft
         self.spectralView.setNeedsDisplay()
+        
     }
     
     func textFieldDidChange(_ textField: UITextField) {
-        Analyser.sharedInstance.phonema = textField.text!
+        self.analyser?.phonema = textField.text!
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func listenMode(sender: AnyObject) {
+        self.analyser?.phonema = ""
+        self.textField?.text = ""
+        self.analyser?.listeningMode = true
+    }
+}
+
+//MARK:
+extension ViewController : AnalyserDelegate {
+    
+    func analyser(_ analyser: Analyser, didFinishTraning phoneme: String) {}
+    
+    func analyser(_ analyser: Analyser, isReadyToPredict:Bool) {
+        self.predictButton?.isEnabled = true
+        self.analyser?.phonema = ""
+        self.textField?.text = ""
+    }
+    
+    func analyser(_ analyser: Analyser, didPredict phoneme: String, certainty: Float) {
+        
+        if certainty > Parameters.PROBABILITY_THRESHOLD {
+            textField?.text = "PREDICTED: " + "\"\(phoneme)\"" + " " + "\(certainty)" + "% certainty"
+        }
+        else {
+            textField?.text = "NOT SURE.."
+        }
+    }
+    
 }

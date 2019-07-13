@@ -15,7 +15,6 @@
 		BD5CF001203504920043DE58 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5CF000203504920043DE58 /* Audio.swift */; };
 		BDE51DD520376C2B0025F463 /* SpectralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DD420376C2B0025F463 /* SpectralView.swift */; };
 		BDE51DD720376CF60025F463 /* FastTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DD620376CF60025F463 /* FastTransform.swift */; };
-		BDE51DD920376EB30025F463 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DD820376EB30025F463 /* Utilities.swift */; };
 		BDE51DDC20377B7A0025F463 /* MFCCepstrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DDB20377B7A0025F463 /* MFCCepstrum.swift */; };
 		BDE51DDE2037D4370025F463 /* KNNDTW.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DDD2037D4370025F463 /* KNNDTW.swift */; };
 		BDE51DE02037E87F0025F463 /* Analyser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE51DDF2037E87F0025F463 /* Analyser.swift */; };
@@ -32,7 +31,6 @@
 		BD5CF000203504920043DE58 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Audio.swift; path = Controller/Audio.swift; sourceTree = "<group>"; };
 		BDE51DD420376C2B0025F463 /* SpectralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectralView.swift; sourceTree = "<group>"; };
 		BDE51DD620376CF60025F463 /* FastTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastTransform.swift; sourceTree = "<group>"; };
-		BDE51DD820376EB30025F463 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BDE51DDB20377B7A0025F463 /* MFCCepstrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFCCepstrum.swift; sourceTree = "<group>"; };
 		BDE51DDD2037D4370025F463 /* KNNDTW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNNDTW.swift; sourceTree = "<group>"; };
 		BDE51DDF2037E87F0025F463 /* Analyser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analyser.swift; sourceTree = "<group>"; };
@@ -70,21 +68,20 @@
 			children = (
 				BD5CEFEE203504740043DE58 /* AppDelegate.swift */,
 				BD5CEFF0203504740043DE58 /* ViewController.swift */,
-				BD5CF002203504990043DE58 /* AudioInput */,
+				BD5CF002203504990043DE58 /* Audio */,
 				BDE51DE22037ED0F0025F463 /* Analysis */,
 				BDE51DD320376C240025F463 /* Views */,
-				BDE51DDA20376EB60025F463 /* Utilities */,
 				BDE51DE12037EB460025F463 /* Resources */,
 			);
 			path = BeatVox;
 			sourceTree = "<group>";
 		};
-		BD5CF002203504990043DE58 /* AudioInput */ = {
+		BD5CF002203504990043DE58 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
 				BD5CF000203504920043DE58 /* Audio.swift */,
 			);
-			name = AudioInput;
+			name = Audio;
 			sourceTree = "<group>";
 		};
 		BDE51DD320376C240025F463 /* Views */ = {
@@ -95,21 +92,13 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		BDE51DDA20376EB60025F463 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				BDE51DD820376EB30025F463 /* Utilities.swift */,
-			);
-			name = Utilities;
-			sourceTree = "<group>";
-		};
 		BDE51DE12037EB460025F463 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				BD5CEFF2203504740043DE58 /* Main.storyboard */,
-				BD5CEFF5203504740043DE58 /* Assets.xcassets */,
-				BD5CEFF7203504740043DE58 /* LaunchScreen.storyboard */,
 				BD5CEFFA203504740043DE58 /* Info.plist */,
+				BD5CEFF7203504740043DE58 /* LaunchScreen.storyboard */,
+				BD5CEFF5203504740043DE58 /* Assets.xcassets */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -203,7 +192,6 @@
 				BDE51DE02037E87F0025F463 /* Analyser.swift in Sources */,
 				BDE51DDC20377B7A0025F463 /* MFCCepstrum.swift in Sources */,
 				BD5CEFF1203504740043DE58 /* ViewController.swift in Sources */,
-				BDE51DD920376EB30025F463 /* Utilities.swift in Sources */,
 				BDE51DDE2037D4370025F463 /* KNNDTW.swift in Sources */,
 				BDE51DD720376CF60025F463 /* FastTransform.swift in Sources */,
 				BD5CEFEF203504740043DE58 /* AppDelegate.swift in Sources */,

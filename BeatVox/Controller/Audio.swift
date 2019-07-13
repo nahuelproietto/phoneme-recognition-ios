@@ -230,11 +230,10 @@ final class Audio : NSObject {
                                             frameCount: UInt32(frameCount))
         
         // Triggers FFT Action + UI Rendering
-        let threashold:Float = 45.0
+        let threashold:Float = 55.0
         if audioObject.audioLevel > threashold {
             let ptr = bufferList.mBuffers.mData?.assumingMemoryBound(to: Float.self)
             audioObject.windowBuffer.append(contentsOf: UnsafeBufferPointer(start: ptr, count: Int(frameCount)))
-            // Windowing. 1024 frames == 23ms
             let windowFrameCount = 1024
             if audioObject.windowBuffer.count == windowFrameCount {
                 audioObject.audioInputCallback(inTimeStamp.pointee.mSampleTime / Double(audioObject.sampleRate),

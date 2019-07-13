@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G18013" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,36 +21,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INSERT PHONEMES LIKE &quot;A&quot; OR &quot;E&quot; AND TALK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QAh-48-VoT">
+                                <rect key="frame" x="55" y="70" width="265" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1QI-8O-c9E">
-                                <rect key="frame" x="100" y="20" width="174" height="30"/>
+                                <rect key="frame" x="42.5" y="125" width="290" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="174" id="lfV-ui-1Yl"/>
+                                    <constraint firstAttribute="width" constant="290" id="lfV-ui-1Yl"/>
                                 </constraints>
                                 <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7r-vc-Dgu">
-                                <rect key="frame" x="154" y="58" width="67" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="67" id="6qI-dU-1wU"/>
-                                </constraints>
-                                <state key="normal" title="Predict"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7r-vc-Dgu">
+                                <rect key="frame" x="107" y="170" width="161" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="PRESS TO PREDICT"/>
                                 <connections>
                                     <action selector="listenModeWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Udp-pE-6Rx"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REPEAT.. UNTIL TRAINING IS DONE ... THEN TAP &quot;PREDICT&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNn-nK-U4z">
+                                <rect key="frame" x="16.5" y="90" width="342" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="QAh-48-VoT" firstAttribute="centerX" secondItem="1QI-8O-c9E" secondAttribute="centerX" id="0Od-Vk-rp7"/>
                             <constraint firstItem="E7r-vc-Dgu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9h0-lT-bmf"/>
+                            <constraint firstItem="1QI-8O-c9E" firstAttribute="top" secondItem="GNn-nK-U4z" secondAttribute="bottom" constant="20" id="Ota-Ad-vss"/>
+                            <constraint firstItem="GNn-nK-U4z" firstAttribute="top" secondItem="QAh-48-VoT" secondAttribute="bottom" constant="5" id="VOz-UU-K1K"/>
+                            <constraint firstItem="GNn-nK-U4z" firstAttribute="centerX" secondItem="QAh-48-VoT" secondAttribute="centerX" id="jc1-4W-x9a"/>
                             <constraint firstItem="1QI-8O-c9E" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rCA-2a-R66"/>
-                            <constraint firstItem="1QI-8O-c9E" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="vXO-pI-IvZ"/>
-                            <constraint firstItem="E7r-vc-Dgu" firstAttribute="top" secondItem="1QI-8O-c9E" secondAttribute="bottom" constant="8" id="wF6-Mi-Z2U"/>
+                            <constraint firstItem="QAh-48-VoT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="vV0-0z-JuG"/>
+                            <constraint firstItem="E7r-vc-Dgu" firstAttribute="top" secondItem="1QI-8O-c9E" secondAttribute="bottom" constant="15" id="wF6-Mi-Z2U"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="phonemaTextField" destination="1QI-8O-c9E" id="3U5-nW-PMU"/>
+                        <outlet property="predictButton" destination="E7r-vc-Dgu" id="ZNe-xu-POz"/>
+                        <outlet property="textField" destination="1QI-8O-c9E" id="ea2-gT-nIJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

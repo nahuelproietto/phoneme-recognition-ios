@@ -8,18 +8,25 @@
 
 import Foundation
 
+protocol AnalyserDelegate {
+    func analyser(_ analyser: Analyser, didFinishTraning phoneme: String)
+    func analyser(_ analyser: Analyser, isReadyToPredict: Bool)
+    func analyser(_ analyser: Analyser, didPredict phoneme: String, certainty: Float)
+}
+
+//MARK: 
 class Analyser : NSObject {
-    
-    static let sharedInstance = Analyser()
     
     var fft = FastTransform(withSize: 1024, sampleRate: 44100)
     var trainingSamples:[knn_curve_label_pair] = [knn_curve_label_pair]()
     let knn_dtw: KNNDTW = KNNDTW()
-    var trainingCount = 0
+    var trainingCount = 0 // Just for testing
     var phonema = ""
     var listeningMode = false
     
-    public func analyse(timeStamp: Double, numberOfFrames: Int, numberOfBands: Int, samples: [Float]) {
+    var delegate : AnalyserDelegate?
+    
+    public func process(timeStamp: Double, numberOfFrames: Int, numberOfBands: Int, samples: [Float]) {
         
         self.fft = FastTransform(withSize: numberOfFrames, sampleRate: 44100.0)
         self.fft.windowType = WindowType.hanning
@@ -44,35 +51,34 @@ class Analyser : NSObject {
         // DTW. Training Series Comparison.
         let mfccFloatData = mfccData.map({Float($0)})
         
+        // Just for testing
         if !phonema.isEmpty {
             if self.trainingCount < Parameters.REQUIRED_TRAINING {
                 print("mfcc data :: %i", mfccData)
                 self.trainingSamples.append(knn_curve_label_pair(curve: mfccFloatData, label: phonema))
-                print("training system :: label :: \(phonema) :: count :: \(self.trainingCount)")
-            }
-            else {
-                if self.trainingCount == Parameters.REQUIRED_TRAINING {
-                    self.knn_dtw.train(data_sets: self.trainingSamples)
-                    print("last... you can start prediction")
+                DispatchQueue.main.async {
+                    self.delegate?.analyser(self, didFinishTraning: self.phonema)
                 }
-                else if self.trainingCount > Parameters.REQUIRED_TRAINING + 1 {
-                    
-                    if self.listeningMode {
-                        let prediction: knn_certainty_label_pair = self.knn_dtw.predict(curve_to_test: mfccFloatData)
-                        if prediction.probability*100 > Parameters.PROBABILITY_THRESHOLD {
-                            print("predicted " + prediction.label, "with ", prediction.probability*100,"% certainty")
-                        }
-                        else {
-                            print("not sure")
-                        }
-                        self.listeningMode = false
-                    }
+            }
+            else if self.trainingCount == Parameters.REQUIRED_TRAINING {
+                self.knn_dtw.train(data_sets: self.trainingSamples)
+                print("READY")
+                DispatchQueue.main.async {
+                    self.delegate?.analyser(self, isReadyToPredict:true)
                 }
             }
             self.trainingCount += 1
         }
         else {
-            print("enter a label to start training")
+            if self.trainingCount > Parameters.REQUIRED_TRAINING {
+                if self.listeningMode {
+                    let prediction: knn_certainty_label_pair = self.knn_dtw.predict(curve_to_test: mfccFloatData)
+                    DispatchQueue.main.async {
+                        self.delegate?.analyser(self, didPredict: prediction.label, certainty: prediction.probability*100)
+                    }
+                    self.listeningMode = false
+                }
+            }
         }
     }
 }

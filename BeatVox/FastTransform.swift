@@ -103,17 +103,17 @@ import Accelerate
             
             if self.window == nil {
                 self.window = [Float](repeating: 0.0, count: size)
+                let pnt: UnsafeMutablePointer<Float> =  UnsafeMutablePointer<Float>(&self.window)
                 
                 switch self.windowType {
                 case .hamming:
-                    vDSP_hamm_window(&self.window!, UInt(size), 0)
+                    vDSP_hamm_window(pnt, UInt(size), 0)
                 case .hanning:
-                    vDSP_hann_window(&self.window!, UInt(size), Int32(vDSP_HANN_NORM))
+                    vDSP_hann_window(pnt, UInt(size), Int32(vDSP_HANN_NORM))
                 default:
                     break
                 }
             }
-            
             // Apply the window
             vDSP_vmul(inMonoBuffer, 1, self.window, 1, &analysisBuffer, 1, UInt(inMonoBuffer.count))
         }
@@ -150,7 +150,10 @@ import Accelerate
         
         // Store and square (for better visualization & conversion to db) the magnitudes
         self.magnitudes = [Float](repeating: 0.0, count: self.halfSize)
-        vDSP_zvmags(&(self.complexBuffer!), 1, &self.magnitudes!, 1, UInt(self.halfSize))
+        
+        let pnt: UnsafeMutablePointer<Float> =  UnsafeMutablePointer<Float>(&self.magnitudes)
+        
+        vDSP_zvmags(&(self.complexBuffer!), 1, pnt, 1, UInt(self.halfSize))
         
         self.hasPerformedFFT = true
     }
